@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 
 @WebFilter(value="/*", 
-initParams= @WebInitParam(name="encoding",value="euc-kr")
+	initParams= @WebInitParam(name="encoding",value="euc-kr")
 )
 public class Ex02Filter implements Filter {
 	String encoding;
