@@ -6,9 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SimpleViewResolver {
-	String prefix="";
-	String suffix="";
+public class SimpleViewResolver implements BitViewResolver {
+	String prefix;
+	String suffix;
 	
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;

@@ -8,42 +8,30 @@ import javax.servlet.http.*;
 import java.util.*;
 
 public class DispatcherServlet extends HttpServlet {
-	
-	Map<String, BitController> cmap = new HashMap<>();
+	private BitViewResolver resolver;
+	private BitHandlerMapping handler;
 	
 	@Override
 	public void init() throws ServletException {
-		Map<String, String> handler = new HashMap<>();
-		File file = new File(getServletContext().getRealPath("./")+"WEB-INF\\classes\\mapping.properties");
-		
+		String bit = getInitParameter("bit");
+		if(bit==null) bit="/WEB-INF/bit.properties";
 		Properties prop=new Properties();
-		InputStream is = null;
 		try {
-			is = new FileInputStream(file);
-			prop.load(is);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} finally {
-				try {
-					if(is!=null) is.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		}
-		
-		Enumeration eles = prop.keys();
-		while(eles.hasMoreElements()) {
-			String key = (String)eles.nextElement();
-			handler.put(key,prop.getProperty(key));
-		}
-				
-		Set<String> keys = handler.keySet();
-		try {
-			for(String key : keys)
-				cmap.put(key, (BitController)(Class.forName(handler.get(key)).newInstance()));
+			prop.load(new FileInputStream(getServletContext().getRealPath(bit)));
+			
+			SimpleHandlerMapping handler = (SimpleHandlerMapping) Class.forName(prop.getProperty("handlerMapping")).newInstance();
+			handler.setPath(getServletContext().getRealPath("./")+"WEB-INF\\classes\\mapping.properties");
+			this.handler=handler;
+			
+			SimpleViewResolver resolver = (SimpleViewResolver) Class.forName(prop.getProperty("viewResolver")).newInstance();
+			resolver.setPrefix("/WEB-INF/views/");
+			resolver.setSuffix(".jsp");
+			this.resolver=resolver;
+			
+		} catch (IOException e) {
+			e.printStackTrace();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -59,12 +47,11 @@ public class DispatcherServlet extends HttpServlet {
 	}
 	
 	public void doDo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("dispatcher start");
 		
 		String url=req.getRequestURI().substring(req.getContextPath().length());
 		
 		BitController controller = null;
-		controller = cmap.get(url);
+		controller = handler.getMapping().get(url);
 		
 		String viewName="";
 		try {
@@ -72,11 +59,9 @@ public class DispatcherServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		resolver.viewResolver(viewName,req, resp);		
 		
-		SimpleViewResolver resolver = new SimpleViewResolver();
-		resolver.setPrefix("/WEB-INF/views/");
-		resolver.setSuffix(".jsp");
-		resolver.viewResolver(viewName,req, resp);
+		
 	}
 	
 	
