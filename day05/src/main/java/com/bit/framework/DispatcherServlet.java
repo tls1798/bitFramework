@@ -1,11 +1,10 @@
 package com.bit.framework;
 
-import java.io.IOException;
+import java.io.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-import com.bit.emp.controller.*;
 import java.util.*;
 
 public class DispatcherServlet extends HttpServlet {
@@ -14,8 +13,39 @@ public class DispatcherServlet extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
-		cmap.put("/index.bit", new IndexController());
-		cmap.put("/emp/index.bit", new ListController());
+		Map<String, String> handler = new HashMap<>();
+		File file = new File(getServletContext().getRealPath("./")+"WEB-INF\\classes\\mapping.properties");
+		
+		Properties prop=new Properties();
+		InputStream is = null;
+		try {
+			is = new FileInputStream(file);
+			prop.load(is);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} finally {
+				try {
+					if(is!=null) is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+		
+		Enumeration eles = prop.keys();
+		while(eles.hasMoreElements()) {
+			String key = (String)eles.nextElement();
+			handler.put(key,prop.getProperty(key));
+		}
+				
+		Set<String> keys = handler.keySet();
+		try {
+			for(String key : keys)
+				cmap.put(key, (BitController)(Class.forName(handler.get(key)).newInstance()));
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
