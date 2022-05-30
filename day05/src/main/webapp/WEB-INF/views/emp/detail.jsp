@@ -36,7 +36,7 @@
 		<div class="page-header">
 			<h1>Detail page <small>${bean.empno }</small></h1>
 		</div>
-		<form class="form-horizontal" action="insert.bit" method="post">
+		<form class="form-horizontal" action="update.bit" method="post">
 			<div class="form-group">
 				<label for="empno" class="col-sm-2 control-label">empno</label>
 				<div class="col-sm-10">
@@ -73,6 +73,7 @@
 	<script type="text/javascript">
 		$('input').prop('readonly',true);
 		$('form').one('submit',function(){
+			$('.page-header>h1').text('Edit');
 			$('input').filter(':gt(0)').removeProp('readonly');
 			return false;
 		});				

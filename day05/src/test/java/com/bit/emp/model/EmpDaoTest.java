@@ -17,7 +17,7 @@ public class EmpDaoTest {
 	}
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws SQLException {
 		dao=new EmpDao();
 	}
 
