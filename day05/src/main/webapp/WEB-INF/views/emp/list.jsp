@@ -51,9 +51,9 @@
 			for(EmpVo bean : (List<EmpVo>)request.getAttribute("list")){			
 			%>
 				<tr>
-					<td><a href="#"><%=bean.getEmpno() %></a></td>
-					<td><a href="#"><%=bean.getEname() %></a></td>
-					<td><a href="#"><%=bean.getSal() %></a></td>
+					<td><a href="detail.bit?empno=<%=bean.getEmpno() %>"><%=bean.getEmpno() %></a></td>
+					<td><a href="detail.bit?empno=<%=bean.getEmpno() %>"><%=bean.getEname() %></a></td>
+					<td><a href="detail.bit?empno=<%=bean.getEmpno() %>"><%=bean.getSal() %></a></td>
 				</tr>
 			<%
 			}

@@ -24,23 +24,44 @@ public class EmpDao {
 	
 	public List<EmpVo> selectAll() throws SQLException {
 		String sql="select * from emp";
-		JdbcTemplate template = new JdbcTemplate(dataSource);
-		RowMapper rowMapper = new RowMapper() {
-			public Object rows(ResultSet rs) throws SQLException{
+		JdbcTemplate<EmpVo> template=new JdbcTemplate<EmpVo>(dataSource);
+		
+		RowMapper<EmpVo> mapper = new RowMapper<EmpVo>() {
+			@Override
+			public EmpVo rows(ResultSet rs) throws SQLException {
+				return new EmpVo(
+						rs.getInt("empno"), rs.getInt("sal"), rs.getNString("ename"), rs.getNString("job")
+						);
+			}
+		};
+		return template.queryForList(sql, mapper);
+	}
+	
+	public EmpVo selectOne(int num) throws SQLException {
+		String sql="select * from emp where empno=?";
+		JdbcTemplate<EmpVo> template = new JdbcTemplate<EmpVo>(dataSource);
+		return template.queryForObject(sql, new RowMapper<EmpVo>() {
+			@Override
+			public EmpVo rows(ResultSet rs) throws SQLException {
 				return new EmpVo(
 						rs.getInt("empno"),rs.getInt("sal"),rs.getString("ename"),rs.getString("job")
 						);
 			}
-		};
-		return template.queryForList(sql,rowMapper,new Object[] {});
+		}, num);
 	}
-
+	
 	public void insertOne(EmpVo bean) throws SQLException {
 		String sql="insert into emp (empno, ename, sal, job) values(?,?,?,?)";
 		JdbcTemplate template = new JdbcTemplate();
 		template.setDataSource(dataSource);
-		Object[] objs=new Object[] {bean.getEmpno(),bean.getEname(),bean.getSal(),bean.getJob()};
-		template.executeUpdate(sql, objs);
+		Object[] objs=new Object[] {};
+		template.executeUpdate(sql, bean.getEmpno(),bean.getEname(),bean.getSal(),bean.getJob());
+	}
+	
+	public int deleteOne(int num) throws SQLException {
+		String sql="delete from emp where empno=?";
+		JdbcTemplate template = new JdbcTemplate(dataSource);
+		return template.executeUpdate(sql, num);
 	}
 	
 }
