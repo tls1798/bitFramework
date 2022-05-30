@@ -3,18 +3,18 @@ package com.bit.emp.model;
 import java.sql.*;
 import java.util.*;
 
-import javax.sql.DataSource;
 
 import com.bit.framework.*;
 import com.mysql.cj.jdbc.*;
 
 public class EmpDao {
+	
 	JdbcTemplate<EmpVo> template=new JdbcTemplate<EmpVo>();
 	RowMapper<EmpVo> mapper = new RowMapper<EmpVo>() {
 		@Override
 		public EmpVo rows(ResultSet rs) throws SQLException {
 			return new EmpVo(
-					rs.getInt("empno"), rs.getInt("sal"), rs.getNString("ename"), rs.getNString("job")
+					rs.getInt("empno"), rs.getInt("sal"), rs.getString("ename"), rs.getString("job")
 					);
 		}
 	};
@@ -24,7 +24,6 @@ public class EmpDao {
 		String user="user01";
 		String password="1234";
 		MysqlDataSource dataSource = new MysqlDataSource();
-//		MysqlDataSource dataSource = new MysqlConnectionPoolDataSource();
 		dataSource.setUrl(url);
 		dataSource.setUser(user);
 		dataSource.setPassword(password);		
