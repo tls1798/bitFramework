@@ -25,5 +25,21 @@ public class EmpDaoTest {
 	public void testSelectAll() throws SQLException {
 		assertTrue(dao.selectAll().size()>0);
 	}
-
+	
+	@Test
+	public void testInsertOne() throws SQLException {
+//		dao.conn.setAutoCommit(false);
+		EmpVo target=new EmpVo(1000,1000,"test","test");
+		dao.insertOne(target);
+		
+//		dao=new EmpDao();
+//		dao.conn.setAutoCommit(false);
+//		target=new EmpVo(1000,1000,"test","test");
+//		try {
+//			dao.insertOne(target);
+//			assertFalse(true);
+//		} catch (Exception e) {
+//			assertFalse(false);
+//		}
+	}
 }

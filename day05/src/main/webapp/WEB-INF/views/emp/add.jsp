@@ -36,7 +36,7 @@
 		<div class="page-header">
 			<h1>List page <small>emp list</small></h1>
 		</div>
-		<form class="form-horizontal">
+		<form class="form-horizontal" action="insert.bit" method="post">
 			<div class="form-group">
 				<label for="empno" class="col-sm-2 control-label">empno</label>
 				<div class="col-sm-10">

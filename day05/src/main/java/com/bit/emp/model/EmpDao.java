@@ -3,46 +3,44 @@ package com.bit.emp.model;
 import java.sql.*;
 import java.util.*;
 
-public class EmpDao {
+import javax.sql.DataSource;
 
-	Connection conn;
-	private PreparedStatement pstmt;
-	private ResultSet rs;
+import com.bit.framework.*;
+import com.mysql.cj.jdbc.*;
+
+public class EmpDao {
+	DataSource dataSource;
+	
 	public EmpDao() {
-		String driver="com.mysql.cj.jdbc.Driver";
 		String url="jdbc:mysql://localhost:3306/scott";
 		String user="user01";
 		String password="1234";
-		
-		try {
-			Class.forName(driver);
-			conn=DriverManager.getConnection(url,user,password);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+		MysqlDataSource dataSource = new MysqlDataSource();
+		dataSource.setUrl(url);
+		dataSource.setUser(user);
+		dataSource.setPassword(password);
+		this.dataSource=dataSource;
 	}
 	
 	public List<EmpVo> selectAll() throws SQLException {
-		List<EmpVo> list = new ArrayList<>();
 		String sql="select * from emp";
-		try {
-			pstmt=conn.prepareStatement(sql);
-			rs=pstmt.executeQuery();
-			while(rs.next()) {
-				list.add(new EmpVo(
-						rs.getInt("empno"),
-						rs.getInt("sal"),
-						rs.getString("ename"),
-						rs.getString("job")
-						));
+		JdbcTemplate template = new JdbcTemplate(dataSource);
+		RowMapper rowMapper = new RowMapper() {
+			public Object rows(ResultSet rs) throws SQLException{
+				return new EmpVo(
+						rs.getInt("empno"),rs.getInt("sal"),rs.getString("ename"),rs.getString("job")
+						);
 			}
-		} finally {
-			
-		}
-		return list;
+		};
+		return template.queryForList(sql,rowMapper,new Object[] {});
 	}
 
+	public void insertOne(EmpVo bean) throws SQLException {
+		String sql="insert into emp (empno, ename, sal, job) values(?,?,?,?)";
+		JdbcTemplate template = new JdbcTemplate();
+		template.setDataSource(dataSource);
+		Object[] objs=new Object[] {bean.getEmpno(),bean.getEname(),bean.getSal(),bean.getJob()};
+		template.executeUpdate(sql, objs);
+	}
+	
 }
