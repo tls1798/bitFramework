@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
-public class Emp02Dao {
+public class Emp02Dao implements EmpDao{
 	DataSource dataSource;
 	
 	public Emp02Dao() {
@@ -23,7 +23,7 @@ public class Emp02Dao {
 	}
 	
 	
-	public List<EmpVo> selectAll() throws ClassNotFoundException, SQLException{
+	public List<EmpVo> selectAll() throws SQLException{
 		List<EmpVo> list=new ArrayList<>();
 		String sql="select * from emp";
 		
@@ -42,7 +42,7 @@ public class Emp02Dao {
 		return list;
 	}
 
-	public void insertOne(EmpVo bean) throws ClassNotFoundException, SQLException {
+	public void insertOne(EmpVo bean) throws SQLException {
 		String sql="insert into emp (empno, ename, sal, job) values (?,?,?,?)";
 		
 		try (

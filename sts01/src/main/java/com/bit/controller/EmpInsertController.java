@@ -6,11 +6,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
-import com.bit.model.Emp02Dao;
-import com.bit.model.EmpVo;
+import com.bit.model.*;
 
 public class EmpInsertController implements Controller {
-	Emp02Dao dao=new Emp02Dao();
+	EmpDao dao;
+	
+	public void setDao(EmpDao dao) {
+		this.dao = dao;
+	}
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
