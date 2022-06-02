@@ -14,6 +14,6 @@
 		<h1>index page</h1>
 	</div>
 
-	<%@ include file="template/footer.jspf" %>		
+<%@ include file="template/footer.jspf" %>		
 </body>
 </html>
