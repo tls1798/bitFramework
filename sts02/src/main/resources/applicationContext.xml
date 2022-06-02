@@ -48,8 +48,13 @@
 		<property name="username" value="user01"></property>
 		<property name="password" value="1234"></property>
 	</bean>
-	<bean id="empDao" class="com.bit.emp.model.EmpDaoImpl1">
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<bean id="empDao" class="com.bit.emp.model.EmpDaoImpl2">
+		<constructor-arg name="dataSource" ref="dataSource"/>
 	</bean>
 	
 </beans>
