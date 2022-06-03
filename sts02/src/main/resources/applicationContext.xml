@@ -58,8 +58,8 @@
 	</bean>
 	
 	<bean id="empDao" class="com.bit.emp.model.EmpDaoImpl4">
-		<constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
-		<constructor-arg ref="transactionManager"></constructor-arg>
+		<constructor-arg ref="jdbcTemplate"/>
+		<constructor-arg ref="transactionManager"/>
 	</bean>
 	
 </beans>
