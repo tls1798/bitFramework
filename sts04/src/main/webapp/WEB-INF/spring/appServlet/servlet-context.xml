@@ -27,6 +27,5 @@
 	<!-- default package 경로 -->
 	<context:component-scan base-package="com.bit.sts04" />
 	
-	<beans:bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 	
 </beans:beans>
