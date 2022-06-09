@@ -167,6 +167,12 @@
 		    <scope>provided</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
+		<dependency>
+		    <groupId>org.webjars.bower</groupId>
+		    <artifactId>jquery</artifactId>
+		    <version>1.12.4</version>
+		</dependency>
 		
 	</dependencies>
     <build>
