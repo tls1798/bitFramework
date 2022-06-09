@@ -36,26 +36,32 @@ public class EmpDao01Impl implements EmpDao {
 
 	@Override
 	public EmpVo findOne(int idx) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String sql="select * from emp where empno=?";
+		return jdbcTemplate.queryForObject(sql, mapper, idx);
 	}
 
 	@Override
 	public void insertOne(EmpVo bean) throws Exception {
-		// TODO Auto-generated method stub
-
+		String sql="insert into emp (ename, sal, job, empno, hiredate) values (?,?,?,?,now())";
+		jdbcTemplate.update(sql,bean.getEname(),bean.getSal(),bean.getJob(),bean.getEmpno());
 	}
 
 	@Override
 	public int updateOne(EmpVo bean) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql="update emp set ename=?, sal=?,job=? where empno=?";
+		return jdbcTemplate.update(sql,bean.getEname(),bean.getSal(),bean.getJob(),bean.getEmpno());
 	}
 
 	@Override
 	public int deleteOne(int idx) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql="delete from emp where empno=?";
+		return jdbcTemplate.update(sql, idx);
+	}
+
+	@Override
+	public int findSize() throws Exception {
+		String sql="select count(*) from emp";
+		return jdbcTemplate.queryForInt(sql); //rs.getInt(1), rs.getInt("cnt")
 	}
 
 }

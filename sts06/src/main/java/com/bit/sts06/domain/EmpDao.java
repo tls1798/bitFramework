@@ -10,5 +10,5 @@ public interface EmpDao {
 	void insertOne(EmpVo bean) throws Exception;
 	int updateOne(EmpVo bean) throws Exception;
 	int deleteOne(int idx) throws Exception;
-	
+	int findSize() throws Exception;
 }
