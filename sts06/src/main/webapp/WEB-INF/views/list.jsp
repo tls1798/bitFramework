@@ -64,18 +64,36 @@
 			</div>
 		</form>
 	</div>
+	
 	<script type="text/javascript">
-		
 		$('#main,#emp,#addemp').css('padding-top', $('nav').height());
 		$('#main,#addemp').height($(document).height());
 		$(document).on('click', '#emp button', function(e) {
 			var empno=$(e.target).attr('data-empno')
 			$.getJSON('api/emp/'+empno, function(data){
 				var form = document.querySelector('#myModal form')
+				var idx = data.empno
 				form.empno.value=data.empno
 				form.ename.value=data.ename
 				form.sal.value=data.sal
 				form.job.value=data.job
+				$(form).one('submit',function(e){
+					e.preventDefault()
+					$(form.ename).removeProp('readonly')
+					$(form.sal).removeProp('readonly')
+					$(form.job).removeProp('readonly')
+					$(form).on('submit',function(e){
+						e.preventDefault()
+						$.ajax('api/emp/'+idx, {
+							method:'PUT',
+							data:JSON.stringify({empno:Number(form.empno.value),ename:form.ename.value,sal:Number(form.sal.value),job:form.job.value}),
+							success:function(data){
+								showList();
+								$('#myModal').modal('hide')
+							}
+						})
+					})
+				})
 			})
 				
 		});
@@ -83,7 +101,6 @@
 		showList();
 
 		function showList() {
-			$('body').css("scroll","no")
 			$('#emp').empty();
 			$.get('api/emp/',function(data) {
 				var arr = data;
@@ -91,7 +108,7 @@
 					var d = new Date();
 					d.setTime(Number(ele.hiredate));
 					$('<div/>').addClass('panel panel-primary')
-						.append('<div class="panel-heading">'+ d.toLocaleDateString()+ "("+ ele.empno+ ')</div>')
+						.append('<div class="panel-heading">'+ d.toLocaleDateString()+ '()'+ ele.empno+ ')</div>')
 						.append('<div class="panel-body">'+ ele.ename+ '<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-empno="'+ele.empno+'">상세보기</button></div>')
 						.appendTo('#emp');
 				});
