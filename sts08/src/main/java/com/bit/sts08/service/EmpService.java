@@ -16,4 +16,8 @@ public interface EmpService {
 
 	boolean delete(int bean);
 
+	boolean login(Emp bean);
+
+	void logout();
+
 }

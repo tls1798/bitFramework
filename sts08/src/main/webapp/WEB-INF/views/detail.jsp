@@ -18,27 +18,36 @@
 				<a href="../">HOME</a>
 				<a href="./">EMP</a>
 				<a href="./add">EMP_Add</a>
-				<a href="../login/">LOGIN</a>
+				<c:if test="${sessionScope.result eq true }">
+					<a href="../logout/">LOGOUT</a>
+				</c:if>
+				<c:if test="${sessionScope.result eq null }">
+					<a href="../login/">LOGIN</a>
+				</c:if>				
 			</p>
+			<c:if test="${sessionScope.result }">
+				<p class="navbar-text">${sessionScope.user }</p>
+			</c:if>
 		</div>
 	</nav>
 	<div class="container ">
-		<form action="./" method="post">
+		<form action="./${empno }" method="post">
+			<input type="hidden" name="_method" value="put">
 			<div class="mb-3">
 				<label for="empno" class="form-label">empno</label> 
 				<input type="text" class="form-control" id="empno" name="empno" value="${bean.empno }" readonly>
 			</div>
 			<div class="mb-3">
 				<label for="ename" class="form-label">ename</label> 
-				<input type="text" class="form-control" id="ename" name="ename" value="${bean.ename }" readonly>
+				<input type="text" class="form-control" id="ename" name="ename" value="${bean.ename }" >
 			</div>
 			<div class="mb-3">
 				<label for="sal" class="form-label">sal</label> 
-				<input type="text" class="form-control" id="sal" name="sal" value="${bean.sal }" readonly>
+				<input type="text" class="form-control" id="sal" name="sal" value="${bean.sal }" >
 			</div>
 			<div class="mb-3">
 				<label for="job" class="form-label">job</label> 
-				<input type="text" class="form-control" id="job" name="job" value="${bean.job }" readonly>
+				<input type="text" class="form-control" id="job" name="job" value="${bean.job }" >
 			</div>
 			<div>
 			<button type="submit" class="btn btn-primary">edit</button>

@@ -22,18 +22,10 @@
 			<a class="navbar-brand" href="../">Navbar</a>
 			<p class="navbar-text">
 				<a href="../">HOME</a>
-				<a href="./">EMP</a>
-				<a href="./add">EMP_Add</a>
-				<c:if test="${sessionScope.result eq true }">
-					<a href="../logout/">LOGOUT</a>
-				</c:if>
-				<c:if test="${sessionScope.result eq null }">
-					<a href="../login/">LOGIN</a>
-				</c:if>				
+				<a href="../emp/">EMP</a>
+				<a href="../emp/add">EMP_Add</a>
+				<a href="../login/">LOGIN</a>
 			</p>
-			<c:if test="${sessionScope.result }">
-				<p class="navbar-text">${sessionScope.user }</p>
-			</c:if>
 		</div>
 	</nav>
 	<div class="container ">
@@ -46,16 +38,8 @@
 				<label for="ename" class="form-label">ename</label> 
 				<input type="text" class="form-control" id="ename" name="ename" value="${bean.ename }">
 			</div>
-			<div class="mb-3">
-				<label for="sal" class="form-label">sal</label> 
-				<input type="text" class="form-control" id="sal" name="sal" value="${bean.sal }">
-			</div>
-			<div class="mb-3">
-				<label for="job" class="form-label">job</label> 
-				<input type="text" class="form-control" id="job" name="job" value="${bean.job }">
-			</div>
 			<div>
-			<button type="submit" class="btn btn-primary">submit</button>
+			<button type="submit" class="btn btn-primary">login</button>
 			<button type="reset" class="btn btn-default">reset</button>
 			<button type="button" class="btn btn-default" onclick="history.back()">back</button>
 			</div>

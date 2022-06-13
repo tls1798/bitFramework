@@ -27,6 +27,11 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 	</context:component-scan>
 	
-	
+	<interceptors>
+		<interceptor>
+			<mapping path="/emp/*"/>
+			<beans:bean class="com.bit.sts08.util.LoginInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>
