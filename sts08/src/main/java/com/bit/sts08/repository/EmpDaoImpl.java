@@ -27,6 +27,26 @@ public class EmpDaoImpl implements EmpDao{
 	public int insertOne(Emp emp) {
 		return sqlSession.insert("emp.insertOne",emp);
 	}
+
+	@Override
+	public int updateOne(Emp emp) {
+		return sqlSession.update("emp.updateOne",emp);
+	}
+
+	@Override
+	public int deleteOne(int idx) {
+		return sqlSession.delete("emp.deleteOne",idx);
+	}
+
+	@Override
+	public int totalSize() {	
+		return sqlSession.selectOne("emp.totalSize");
+	}
+
+	@Override
+	public List<Emp> findMany(String val) {
+		return sqlSession.selectList("emp.findMany",val);
+	}
 	
 	
 }

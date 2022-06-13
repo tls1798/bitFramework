@@ -17,5 +17,21 @@
 		insert into emp (empno, ename, sal, job, hiredate) values (#{empno},#{ename},#{sal},#{job},now())	
 	</insert>
 	
+	<update id="updateOne" parameterType="com.bit.sts08.domain.Emp">
+		update emp set ename=#{ename},sal=#{sal},job=#{job} where empno=#{empno}
+	</update>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete from emp where empno=#{empno}
+	</delete>
+	
+	<select id="totalSize" resultType="int">
+		select count(*) from emp
+	</select>
+
+	<select id="findMany" parameterType="String" resultType="com.bit.sts08.domain.Emp">
+		select * from emp where ename like concat('%',#{values},'%')
+	</select>
+	
 	
 </mapper>

@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"
-		p:location="userInfo.properties"
+		p:location="classpath:/userInfo.properties"
 	/>
 
 	<bean id="dataSource" 
