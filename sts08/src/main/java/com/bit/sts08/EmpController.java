@@ -5,13 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.bit.sts08.service.EmpServiceImpl;
+import com.bit.sts08.service.EmpService;
 
 @Controller
 public class EmpController {
 
 	@Autowired
-	EmpServiceImpl empService;
+	EmpService empService;
 	
 	@GetMapping("/emp/")
 	public String list(Model model) {
