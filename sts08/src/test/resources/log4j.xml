@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.bit.sts08">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
