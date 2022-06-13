@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.bit.sts08.domain.Emp;
 import com.bit.sts08.service.EmpService;
 
 @Controller
@@ -18,4 +22,28 @@ public class EmpController {
 		empService.selectAll(model);
 		return "list";
 	}
+	
+	@GetMapping("/emp/add")
+	public String add() {
+		return "add";
+	}
+	
+	@PostMapping("/emp/")
+	public String add(@ModelAttribute("bean") Emp bean, Model model) {
+		try {
+			empService.insert(bean);	
+			return "redirect:./";			
+		} catch (Exception e) {
+			model.addAttribute("err",e);
+			return "add";			
+		}
+	}
+	
+	@GetMapping("/emp/{empno}")
+	public String detail(@PathVariable int empno, Model model) {
+		model.addAttribute("bean",empService.detail(empno));
+		return "detail";
+	}
+	
+	
 }

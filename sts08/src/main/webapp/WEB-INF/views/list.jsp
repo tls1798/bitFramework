@@ -13,11 +13,12 @@
 <body>
 	<nav class="navbar" style="background-color: #cccccc;">
 		<div class="container-fluid">
-			<a class="navbar-brand">Navbar</a>
-			<p>
-				<a href="#">HOME</a>
-				<a href="#">EMP</a>
-				<a href="#">LOGIN</a>
+			<a class="navbar-brand" href="../">Navbar</a>
+			<p class="navbar-text">
+				<a href="../">HOME</a>
+				<a href="./">EMP</a>
+				<a href="./add">EMP_Add</a>
+				<a href="../login/">LOGIN</a>
 			</p>
 		</div>
 	</nav>
@@ -28,7 +29,7 @@
 			<div class="card-body">
 				<h5 class="card-title">${bean.ename }</h5>
 				<p class="card-text">${bean.hiredate }</p>
-				<a href="${bean.empno }" class="btn btn-primary">go</a>
+				<a href="${bean.empno }" class="btn btn-primary">go detail</a>
 			</div>
 		</div>
 	</c:forEach>

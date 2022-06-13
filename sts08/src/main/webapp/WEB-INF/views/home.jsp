@@ -4,7 +4,9 @@
 <head>
 	<title>Home</title>
 	<link rel="stylesheet" type= "text/css" href="webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>
-	
+	<script type="text/javascript">
+	location.replace('./emp/')
+	</script>
 </head>
 <body>
 <h1>
