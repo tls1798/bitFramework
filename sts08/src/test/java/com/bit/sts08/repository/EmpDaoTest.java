@@ -9,6 +9,9 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.bit.sts08.domain.Emp;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,9 +30,18 @@ public class EmpDaoTest {
 	}
 	
 	@Test
-	public void test2FindOne() {
+	public void test3FindOne() {
 		assertNotNull(empDao.findOne(999));
 		log.debug(empDao.findOne(999).toString());
+	}
+	
+	
+	@Transactional
+	@Test
+	public void test2InsertOne() {
+		Emp emp = new Emp(701,777,"test1","test2",null);
+		assertNotEquals(0, empDao.insertOne(emp));
+		log.debug(empDao.findOne(emp.getEmpno()).toString());
 	}
 	
 }

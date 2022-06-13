@@ -8,4 +8,5 @@ public interface EmpDao {
 
 	List<Emp> findAll();
 	Emp findOne(int idx);
+	int insertOne(Emp emp);
 }

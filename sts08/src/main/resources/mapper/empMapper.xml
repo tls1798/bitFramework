@@ -13,5 +13,9 @@
 		select * from emp where empno=#{value}	
 	</select>
 	
+	<insert id="insertOne" parameterType="com.bit.sts08.domain.Emp">
+		insert into emp (empno, ename, sal, job, hiredate) values (#{empno},#{ename},#{sal},#{job},now())	
+	</insert>
+	
 	
 </mapper>
