@@ -126,4 +126,12 @@ buildNumber.properties
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,vagrant,maven
 
 /Servers/
+
+### node js ###
 node_modules/
+
+### Spring ###
+.mvn/
+/**/mvnw
+/**/mvnw.cmd
+/**/pom.xml
