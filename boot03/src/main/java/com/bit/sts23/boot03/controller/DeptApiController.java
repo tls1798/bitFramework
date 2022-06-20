@@ -28,17 +28,17 @@ public class DeptApiController {
 
 	@Autowired
 	RestServiceImpl restService;
-	
-	@GetMapping("/")
+
+	@GetMapping("/dept")
 	public ResponseEntity<?> getList(){
 		return ResponseEntity.ok(restService.selectAll());
 	}
-	
+
 	@GetMapping("/dept/{deptno}")
 	public ResponseEntity<?> getDept(@PathVariable int deptno) {
 		return ResponseEntity.ok(restService.selectOne(deptno));
 	}
-	
+
 	@PostMapping("/dept")
 	public ResponseEntity<?> addDept(@RequestBody Dept dept) {
 		Map<String, Object> map = new LinkedHashMap<>();
@@ -49,9 +49,10 @@ public class DeptApiController {
 		map.put("result", false);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
 	}
-	
+
 	@PutMapping("/dept/{deptno}")
 	public ResponseEntity<?> editDept(@PathVariable int deptno, @RequestBody Dept bean){
+		System.out.println(bean);
 		Map<String, Object> map = new LinkedHashMap<>();
 		if(restService.updateOne(bean)>0) {
 			map.put("result", true);
@@ -61,7 +62,7 @@ public class DeptApiController {
 		map.put("result", false);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}
-	
+
 	@DeleteMapping("/dept/{deptno}")
 	public ResponseEntity<?> deleteDept(@PathVariable int deptno){
 		return ResponseEntity.status(
