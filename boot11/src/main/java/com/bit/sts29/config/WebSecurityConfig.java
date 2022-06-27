@@ -17,12 +17,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+//		csrf 사용 안할 때
+		http.csrf().disable();
 //		홈 누구나 접근 가능
 		http.authorizeRequests().antMatchers("/", "/home").permitAll();
 //		모든 페이지는 인증을 받아야 함 -> 로그인 해야함
 		http.authorizeRequests().anyRequest().authenticated();
 //		로그인 누구나 접근 가능
-		http.formLogin().loginPage("/login").permitAll();
+		http.formLogin().loginPage("/login").loginProcessingUrl("/login").permitAll();
 //		로그아웃 누구나 접근 가능
 		http.logout().permitAll();
 	}
