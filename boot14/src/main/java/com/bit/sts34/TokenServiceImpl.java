@@ -1,5 +1,6 @@
 package com.bit.sts34;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ public class TokenServiceImpl {
 		        .withClaim("key4", "val4")
 		        .withSubject("user1")
 		        .withPayload(map)
+		        .withExpiresAt(new Date(System.currentTimeMillis()+1000*60))
 		        .sign(algorithm);
 		    return token;
 		} catch (JWTCreationException exception){
