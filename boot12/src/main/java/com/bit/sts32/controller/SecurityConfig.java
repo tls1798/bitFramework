@@ -20,24 +20,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeHttpRequests().antMatchers("/","/login","/logout").permitAll();
 //		http.authorizeHttpRequests().antMatchers("/hello").authenticated();
 //		http.authorizeHttpRequests().antMatchers("/").authenticated();
-		http.authorizeHttpRequests().anyRequest().authenticated();
+//		http.authorizeHttpRequests().anyRequest().authenticated();
+//		권한에 따른 접근
+		http.authorizeHttpRequests().anyRequest().hasAnyRole("ADMIN","USER");
 		http.formLogin().loginPage("/login");
 	}
 	
 	@Autowired
 	DataSource dataSource;
 
-//	[insert into users (username, password, enabled) values (?,?,?)]; 
-//	Table 'xe.users' doesn't exist
+	
+//	insert into users (username, password, enabled) values (?,?,?); 
+//	CREATE TABLE `users` (
+//	`username` VARCHAR(50) NOT NULL,
+//	`password` VARCHAR(100) NOT NULL,
+//	`enabled` BIT NULL DEFAULT NULL,
+//	PRIMARY KEY (`username`)
+//	)
+//	COLLATE='utf8mb4_0900_ai_ci';
 
-	@Override
-	public void configure(AuthenticationManagerBuilder builder) throws Exception {
-	  builder.jdbcAuthentication().dataSource(dataSource).withUser("dave")
-	    .password(getPasswordEncoder().encode("secret")).roles("USER");
-	}
+//	@Override
+//	public void configure(AuthenticationManagerBuilder builder) throws Exception {
+//	  builder.jdbcAuthentication().dataSource(dataSource).withUser("user01")
+//	    .password(getPasswordEncoder().encode("1234")).roles("USER");
+//	}
 	
 	@Bean
 	BCryptPasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+//	db에 있는 내용으로 로그인
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+	    auth
+	    	.jdbcAuthentication()
+	    	.dataSource(dataSource)
+	    	.usersByUsernameQuery("select username, password, enabled from users where username=?")
+	    	.authoritiesByUsernameQuery("select username, authority from authorities where username=?");
 	}
 }
